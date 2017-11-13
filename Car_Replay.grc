@@ -82,33 +82,6 @@
     </param>
   </block>
   <block>
-    <key>variable</key>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(24, 572)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>current_dir</value>
-    </param>
-    <param>
-      <key>value</key>
-      <value>0</value>
-    </param>
-  </block>
-  <block>
     <key>variable_qtgui_push_button</key>
     <param>
       <key>comment</key>
@@ -261,7 +234,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(16, 220)</value>
+      <value>(16, 212)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -436,7 +409,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(24, 508)</value>
+      <value>(16, 276)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -616,7 +589,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(224, 444)</value>
+      <value>(152, 444)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -667,7 +640,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(824, 204)</value>
+      <value>(752, 204)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -710,7 +683,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(440, 320)</value>
+      <value>(368, 320)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -753,7 +726,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(624, 252)</value>
+      <value>(552, 252)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -796,7 +769,7 @@
     </param>
     <param>
       <key>_io_cache</key>
-      <value>('RC Car Controller', 'blk', [('sample_rate', '1000000.0'), ('symbol_length', '0.000532'), ('up', 'False'), ('down', 'False'), ('left', 'False'), ('right', 'False'), ('up_left', 'False'), ('up_right', 'False'), ('down_left', 'False'), ('down_right', 'False')], [], [('0', 'float', 1)], 'Embedded Python Block example - a simple multiply const', ['down', 'down_left', 'down_right', 'left', 'right', 'up', 'up_left', 'up_right'])</value>
+      <value>('RC Car Controller', 'blk', [('sample_rate', '1000000.0'), ('symbol_length', '0.000532'), ('up', 'False'), ('down', 'False'), ('left', 'False'), ('right', 'False'), ('up_left', 'False'), ('up_right', 'False'), ('down_left', 'False'), ('down_right', 'False')], [], [('0', 'float', 1)], 'The RC Car Controller for demonstrating basic smart replay attacks', ['down', 'down_left', 'down_right', 'left', 'right', 'up', 'up_left', 'up_right'])</value>
     </param>
     <param>
       <key>_source_code</key>
@@ -851,7 +824,7 @@ def convert_dir_booleans_to_dir_string(up, down, left, right, up_left, up_right,
 
 
 class blk(gr.sync_block):  # other base classes are basic_block, decim_block, interp_block
-    """Embedded Python Block example - a simple multiply const"""
+    """The RC Car Controller for demonstrating basic smart replay attacks"""
 
     def __init__(self, sample_rate=1e6, symbol_length=532e-6, up=False, down=False, left=False, right=False, up_left=False, up_right=False, down_left=False, down_right=False):  # only default arguments here
         """arguments to this function show up as parameters in GRC"""
@@ -944,7 +917,7 @@ class blk(gr.sync_block):  # other base classes are basic_block, decim_block, in
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(224, 244)</value>
+      <value>(152, 244)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1903,7 +1876,7 @@ class blk(gr.sync_block):  # other base classes are basic_block, decim_block, in
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(800, 284)</value>
+      <value>(728, 284)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -2034,7 +2007,7 @@ class blk(gr.sync_block):  # other base classes are basic_block, decim_block, in
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(624, 436)</value>
+      <value>(552, 404)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -2125,7 +2098,7 @@ class blk(gr.sync_block):  # other base classes are basic_block, decim_block, in
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(616, 308)</value>
+      <value>(544, 308)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -2176,7 +2149,7 @@ class blk(gr.sync_block):  # other base classes are basic_block, decim_block, in
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(808, 20)</value>
+      <value>(776, 12)</value>
     </param>
     <param>
       <key>_rotation</key>
