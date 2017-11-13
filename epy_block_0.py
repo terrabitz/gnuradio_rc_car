@@ -49,7 +49,7 @@ def convert_dir_booleans_to_dir_string(up, down, left, right, up_left, up_right,
 
 
 class blk(gr.sync_block):  # other base classes are basic_block, decim_block, interp_block
-    """Embedded Python Block example - a simple multiply const"""
+    """The RC Car Controller for demonstrating basic smart replay attacks"""
 
     def __init__(self, sample_rate=1e6, symbol_length=532e-6, up=False, down=False, left=False, right=False, up_left=False, up_right=False, down_left=False, down_right=False):  # only default arguments here
         """arguments to this function show up as parameters in GRC"""
