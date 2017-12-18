@@ -3,7 +3,7 @@
 ##################################################
 # GNU Radio Python Flow Graph
 # Title: Top Block
-# Generated: Mon Nov 13 12:45:57 2017
+# Generated: Mon Dec 18 17:57:20 2017
 ##################################################
 
 if __name__ == '__main__':
@@ -16,23 +16,18 @@ if __name__ == '__main__':
         except:
             print "Warning: failed to XInitThreads()"
 
-from PyQt4 import Qt
+from PyQt5 import Qt
 from gnuradio import analog
 from gnuradio import blocks
 from gnuradio import eng_notation
-from gnuradio import filter
 from gnuradio import gr
-from gnuradio import qtgui
 from gnuradio.eng_option import eng_option
 from gnuradio.filter import firdes
 from optparse import OptionParser
 import SimpleXMLRPCServer
 import epy_block_0
-import osmosdr
-import sip
 import sys
 import threading
-import time
 from gnuradio import qtgui
 
 
@@ -69,8 +64,8 @@ class top_block(gr.top_block, Qt.QWidget):
         self.up_left = up_left = False
         self.up = up = False
         self.target_rate = target_rate = 1e6
-        self.target_freq = target_freq = 49.86e6
-        self.symbol_length = symbol_length = 532e-6
+        self.target_freq = target_freq = 49
+        self.symbol_length = symbol_length = 213e-6
         self.right = right = False
         self.left = left = False
         self.interpolation = interpolation = 10
@@ -126,53 +121,20 @@ class top_block(gr.top_block, Qt.QWidget):
         self.xmlrpc_server_0_thread = threading.Thread(target=self.xmlrpc_server_0.serve_forever)
         self.xmlrpc_server_0_thread.daemon = True
         self.xmlrpc_server_0_thread.start()
-        self.rational_resampler_xxx_0 = filter.rational_resampler_ccc(
-                interpolation=interpolation,
-                decimation=1,
-                taps=None,
-                fractional_bw=None,
-        )
-        self.qtgui_sink_x_0 = qtgui.sink_c(
-        	1024, #fftsize
-        	firdes.WIN_BLACKMAN_hARRIS, #wintype
-        	0, #fc
-        	target_rate, #bw
-        	"", #name
-        	True, #plotfreq
-        	True, #plotwaterfall
-        	True, #plottime
-        	True, #plotconst
-        )
-        self.qtgui_sink_x_0.set_update_time(1.0/10)
-        self._qtgui_sink_x_0_win = sip.wrapinstance(self.qtgui_sink_x_0.pyqwidget(), Qt.QWidget)
-        self.top_layout.addWidget(self._qtgui_sink_x_0_win)
-
-        self.qtgui_sink_x_0.enable_rf_freq(False)
-
-
-
-        self.osmosdr_sink_0 = osmosdr.sink( args="numchan=" + str(1) + " " + '' )
-        self.osmosdr_sink_0.set_sample_rate(target_rate*interpolation)
-        self.osmosdr_sink_0.set_center_freq(target_freq, 0)
-        self.osmosdr_sink_0.set_freq_corr(0, 0)
-        self.osmosdr_sink_0.set_gain(10, 0)
-        self.osmosdr_sink_0.set_if_gain(20, 0)
-        self.osmosdr_sink_0.set_bb_gain(20, 0)
-        self.osmosdr_sink_0.set_antenna('', 0)
-        self.osmosdr_sink_0.set_bandwidth(0, 0)
-
         self.epy_block_0 = epy_block_0.blk(sample_rate=target_rate, symbol_length=symbol_length, up=up, down=down, left=left, right=right, up_left=up_left, up_right=up_right, down_left=down_left, down_right=down_right)
+        self.blocks_throttle_1 = blocks.throttle(gr.sizeof_gr_complex*1, target_rate,True)
         self.blocks_float_to_complex_0 = blocks.float_to_complex(1)
+        self.blocks_file_sink_0 = blocks.file_sink(gr.sizeof_gr_complex*1, '/root/Documents/Wireless_Lab/captures/car_recreation.cfile', False)
+        self.blocks_file_sink_0.set_unbuffered(False)
         self.analog_const_source_x_0 = analog.sig_source_f(0, analog.GR_CONST_WAVE, 0, 0, 0)
 
         ##################################################
         # Connections
         ##################################################
         self.connect((self.analog_const_source_x_0, 0), (self.blocks_float_to_complex_0, 1))
-        self.connect((self.blocks_float_to_complex_0, 0), (self.qtgui_sink_x_0, 0))
-        self.connect((self.blocks_float_to_complex_0, 0), (self.rational_resampler_xxx_0, 0))
+        self.connect((self.blocks_float_to_complex_0, 0), (self.blocks_throttle_1, 0))
+        self.connect((self.blocks_throttle_1, 0), (self.blocks_file_sink_0, 0))
         self.connect((self.epy_block_0, 0), (self.blocks_float_to_complex_0, 0))
-        self.connect((self.rational_resampler_xxx_0, 0), (self.osmosdr_sink_0, 0))
 
     def closeEvent(self, event):
         self.settings = Qt.QSettings("GNU Radio", "top_block")
@@ -205,15 +167,13 @@ class top_block(gr.top_block, Qt.QWidget):
 
     def set_target_rate(self, target_rate):
         self.target_rate = target_rate
-        self.qtgui_sink_x_0.set_frequency_range(0, self.target_rate)
-        self.osmosdr_sink_0.set_sample_rate(self.target_rate*self.interpolation)
+        self.blocks_throttle_1.set_sample_rate(self.target_rate)
 
     def get_target_freq(self):
         return self.target_freq
 
     def set_target_freq(self, target_freq):
         self.target_freq = target_freq
-        self.osmosdr_sink_0.set_center_freq(self.target_freq, 0)
 
     def get_symbol_length(self):
         return self.symbol_length
@@ -240,7 +200,6 @@ class top_block(gr.top_block, Qt.QWidget):
 
     def set_interpolation(self, interpolation):
         self.interpolation = interpolation
-        self.osmosdr_sink_0.set_sample_rate(self.target_rate*self.interpolation)
 
     def get_down_right(self):
         return self.down_right
@@ -267,7 +226,7 @@ class top_block(gr.top_block, Qt.QWidget):
 def main(top_block_cls=top_block, options=None):
 
     from distutils.version import StrictVersion
-    if StrictVersion(Qt.qVersion()) >= StrictVersion("4.5.0"):
+    if StrictVersion("4.5.0") <= StrictVersion(Qt.qVersion()) < StrictVersion("5.0.0"):
         style = gr.prefs().get_string('qtgui', 'style', 'raster')
         Qt.QApplication.setGraphicsSystem(style)
     qapp = Qt.QApplication(sys.argv)
@@ -279,7 +238,7 @@ def main(top_block_cls=top_block, options=None):
     def quitting():
         tb.stop()
         tb.wait()
-    qapp.connect(qapp, Qt.SIGNAL("aboutToQuit()"), quitting)
+    qapp.aboutToQuit.connect(quitting)
     qapp.exec_()
 
 
